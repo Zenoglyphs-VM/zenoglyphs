@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>zcribe — Node Z mark</title>
+<style>
+  /* No CDN, no build step, no external fonts — same rule this project holds
+     its own shipped pages to (see web/embed.go). System font stacks stand in
+     for Space Grotesk / JetBrains Mono; this file is a decision record, not
+     a pixel-exact specimen — the full six-way comparison at real type is
+     linked from ../logos/README.md if that's ever needed again. */
+  :root {
+    --background: hsl(0 0% 100%);
+    --foreground: hsl(0 0% 14.5%);
+    --muted-foreground: hsl(0 0% 45%);
+    --border: hsl(0 0% 90%);
+    --info: hsl(214 100% 46%);
+    --swatch-dark-bg: hsl(0 0% 8%);
+    --swatch-dark-border: hsl(0 0% 20%);
+    --swatch-light-bg: hsl(0 0% 100%);
+    --swatch-light-border: hsl(0 0% 90%);
+    --radius-lg: 6px;
+    --radius-xl: 10px;
+    --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: hsl(0 0% 8%);
+      --foreground: hsl(0 0% 98%);
+      --muted-foreground: hsl(0 0% 65%);
+      --border: hsl(0 0% 20%);
+      --info: hsl(214 100% 62%);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    padding: 40px 28px 64px;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--info);
+    margin: 0 0 10px;
+  }
+  h1 { font-size: 26px; font-weight: 800; margin: 0 0 8px; letter-spacing: -0.01em; }
+  p.dek {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+    max-width: 58ch;
+    margin: 0 0 32px;
+  }
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .swatch {
+    border-radius: var(--radius-xl);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+  }
+  .swatch.dark { background: var(--swatch-dark-bg); border: 1px solid var(--swatch-dark-border); }
+  .swatch.light { background: var(--swatch-light-bg); border: 1px solid var(--swatch-light-border); }
+  .lockup { display: flex; align-items: center; gap: 8px; }
+  .lockup svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .lockup .word { font-size: 16px; font-weight: 600; letter-spacing: -0.005em; }
+  .swatch.dark .word { color: hsl(0 0% 98%); }
+  .swatch.light .word { color: hsl(0 0% 14.5%); }
+  .lockup .word b { font-weight: 800; }
+  .cap {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .swatch.dark .cap { color: hsl(0 0% 45%); }
+  .swatch.light .cap { color: hsl(0 0% 55%); }
+  .detail { flex-direction: row; align-items: center; justify-content: space-between; gap: 16px; }
+  .detail svg.big { width: 60px; height: 60px; flex-shrink: 0; }
+  .stack { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .tab-mock {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: hsl(0 0% 15%);
+    border: 1px solid var(--swatch-dark-border);
+    border-bottom: none;
+    border-radius: 7px 7px 0 0;
+    padding: 6px 10px 5px;
+  }
+  .tab-mock svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .tab-mock span { font-size: 11px; color: hsl(0 0% 80%); }
+  .note {
+    margin-top: 28px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted-foreground);
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+  .note code { font-family: var(--font-mono); font-size: 12px; }
+  @media (max-width: 560px) {
+    .swatches { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">zcribe · adopted mark</p>
+  <h1>Node Z</h1>
+  <p class="dek">
+    A single-weight Z route between four small nodes, filled/stroked with the plasma
+    gradient. Chosen over four other concepts (and the original angular Z) for reading
+    cleanly from a 16px favicon tab through the header lockup, and for echoing the design
+    system's network glyphs — a route traced between nodes — closer than a drawn
+    letterform does.
+  </p>
+
+  <div class="swatches">
+    <div class="swatch dark">
+      <div class="lockup">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="g-d" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="hsl(120 86% 63%)"/><stop offset="100%" stop-color="hsl(145 100% 38%)"/></linearGradient></defs><path d="M6,6L18,6L6,18L18,18" fill="none" stroke="url(#g-d)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="6" r="2" fill="url(#g-d)"/><circle cx="18" cy="6" r="1.6" fill="url(#g-d)"/><circle cx="6" cy="18" r="1.6" fill="url(#g-d)"/><circle cx="18" cy="18" r="2" fill="url(#g-d)"/></svg>
+        <span class="word"><b>z</b>cribe</span>
+      </div>
+      <span class="cap">header · dark</span>
+    </div>
+    <div class="swatch light">
+      <div class="lockup">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="g-l" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="hsl(120 86% 63%)"/><stop offset="100%" stop-color="hsl(145 100% 38%)"/></linearGradient></defs><path d="M6,6L18,6L6,18L18,18" fill="none" stroke="url(#g-l)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="6" r="2" fill="url(#g-l)"/><circle cx="18" cy="6" r="1.6" fill="url(#g-l)"/><circle cx="6" cy="18" r="1.6" fill="url(#g-l)"/><circle cx="18" cy="18" r="2" fill="url(#g-l)"/></svg>
+        <span class="word"><b>z</b>cribe</span>
+      </div>
+      <span class="cap">header · light</span>
+    </div>
+    <div class="swatch dark detail">
+      <div class="stack">
+        <svg class="big" viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="g-big" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="hsl(120 86% 63%)"/><stop offset="100%" stop-color="hsl(145 100% 38%)"/></linearGradient></defs><path d="M6,6L18,6L6,18L18,18" fill="none" stroke="url(#g-big)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="6" r="2" fill="url(#g-big)"/><circle cx="18" cy="6" r="1.6" fill="url(#g-big)"/><circle cx="6" cy="18" r="1.6" fill="url(#g-big)"/><circle cx="18" cy="18" r="2" fill="url(#g-big)"/></svg>
+        <span class="cap">64px</span>
+      </div>
+      <div class="stack">
+        <div class="tab-mock">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="g-tab" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="hsl(120 86% 63%)"/><stop offset="100%" stop-color="hsl(145 100% 38%)"/></linearGradient></defs><path d="M6,6L18,6L6,18L18,18" fill="none" stroke="url(#g-tab)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="6" r="2" fill="url(#g-tab)"/><circle cx="18" cy="6" r="1.6" fill="url(#g-tab)"/><circle cx="6" cy="18" r="1.6" fill="url(#g-tab)"/><circle cx="18" cy="18" r="2" fill="url(#g-tab)"/></svg>
+          <span>zcribe</span>
+        </div>
+        <span class="cap">16px tab</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">
+    Source: <code>../node-z.svg</code>. Live in
+    <code>../../components/ZcribeMark.vue</code> and
+    <code>../../../public/favicon.svg</code> — both must be edited together if this
+    mark ever changes again. The four other concepts considered alongside this one,
+    and the original angular-Z mark this replaced, are recorded in
+    <code>README.md</code> in this folder.
+  </p>
+</div>
+</body>
+</html>

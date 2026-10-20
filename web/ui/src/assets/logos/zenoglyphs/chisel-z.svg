@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- Chisel Z — a Z cut as three wedges, each tapering the way a chisel
+       leaves a stroke. The oldest inscriptions on record are cuneiform; if
+       the project is named for glyphs, the mark can carry where glyphs came
+       from. All fill, no stroke, so it holds weight at 16px. -->
+  <defs>
+    <linearGradient id="zg-chisel-plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)" />
+      <stop offset="100%" stop-color="hsl(145 100% 38%)" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M4,3.6L20,5.4L20,7.6L4,8.2Z
+       M18.4,7L15.4,7L6.2,16.6L9.8,16.6Z
+       M4,16.4L20,15.8L20,20.4L4,18.2Z"
+    fill="url(#zg-chisel-plasma)"
+  />
+</svg>

@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zenoglyphs Mark Round</title>
+<!-- Round two of the mark exploration, for the zenoglyphs rebrand. Unlike
+     node-z.mockup.html one folder up, this one does load the real Space Grotesk
+     and JetBrains Mono: that file was judging silhouettes, where system stacks
+     were close enough, but half the question here is how each mark sits against
+     the actual wordmark, and a substituted face answers a different question.
+     System stacks are still declared as fallbacks. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap">
+<style>
+  :root {
+    --background: hsl(0 0% 100%);
+    --foreground: hsl(0 0% 14.5%);
+    --muted-foreground: hsl(0 0% 45%);
+    --border: hsl(0 0% 90%);
+    --info: hsl(214 100% 41%);
+    --rule: hsl(0 0% 92%);
+    --verdict-now: hsl(145 100% 30%);
+    --verdict-risk: hsl(38 92% 34%);
+    --radius: 6px;
+    --radius-lg: 10px;
+    --font-sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+
+    /* The two grounds every mark has to hold, fixed in both themes — the
+       point of the swatches is that they do not follow the viewer. */
+    --dark-bg: hsl(0 0% 8%);
+    --dark-fg: hsl(0 0% 98%);
+    --dark-border: hsl(0 0% 20%);
+    --dark-chip: hsl(0 0% 14%);
+    --dark-chip-fg: hsl(0 0% 88%);
+    --dark-cap: hsl(0 0% 63%);
+    --light-bg: hsl(0 0% 100%);
+    --light-fg: hsl(0 0% 14.5%);
+    --light-border: hsl(0 0% 90%);
+    --light-chip: hsl(0 0% 95%);
+    --light-chip-fg: hsl(0 0% 25%);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --background: hsl(0 0% 8%);
+      --foreground: hsl(0 0% 98%);
+      --muted-foreground: hsl(0 0% 63%);
+      --border: hsl(0 0% 20%);
+      --info: hsl(214 100% 66%);
+      --rule: hsl(0 0% 17%);
+      --verdict-now: hsl(145 100% 58%);
+      --verdict-risk: hsl(38 96% 62%);
+    }
+  }
+  :root[data-theme="dark"] {
+    --background: hsl(0 0% 8%);
+    --foreground: hsl(0 0% 98%);
+    --muted-foreground: hsl(0 0% 63%);
+    --border: hsl(0 0% 20%);
+    --info: hsl(214 100% 66%);
+    --rule: hsl(0 0% 17%);
+    --verdict-now: hsl(145 100% 58%);
+    --verdict-risk: hsl(38 96% 62%);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    padding: 44px 24px 76px;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; display: flex; flex-direction: column; gap: 54px; }
+
+  code, .mono { font-family: var(--font-mono); font-size: 0.86em; }
+
+  .ledger {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--info);
+    margin: 0;
+  }
+  h1 {
+    font-size: clamp(30px, 5vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 10px 0 14px;
+    text-wrap: balance;
+  }
+  h2 { font-size: 19px; font-weight: 700; letter-spacing: -0.012em; margin: 0; }
+  .dek { color: var(--muted-foreground); max-width: 66ch; margin: 0; }
+  .dek + .dek { margin-top: 12px; }
+  section > header { margin-bottom: 20px; }
+  section > header .dek { margin-top: 6px; font-size: 14px; }
+
+  /* ---- contact sheet ---- */
+  .sheet {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(146px, 1fr));
+    gap: 1px;
+    background: var(--dark-border);
+    border: 1px solid var(--dark-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .sheet .cell {
+    background: var(--dark-bg);
+    padding: 26px 12px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .cell .cap {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--dark-cap);
+    text-align: center;
+  }
+  .cell.is-current .cap { color: hsl(145 100% 50%); }
+
+  /* ---- the 16px test ---- */
+  .tabs { display: flex; flex-direction: column; gap: 10px; }
+  .tabrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+    border-radius: var(--radius-lg);
+    border: 1px solid;
+  }
+  .tabrow.on-dark { background: var(--dark-bg); border-color: var(--dark-border); }
+  .tabrow.on-light { background: var(--light-bg); border-color: var(--light-border); }
+  .tab {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 11px 5px 8px;
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+  .on-dark .tab { background: var(--dark-chip); color: var(--dark-chip-fg); }
+  .on-light .tab { background: var(--light-chip); color: var(--light-chip-fg); }
+
+  /* ---- per-mark specimens ---- */
+  .specimens { display: flex; flex-direction: column; }
+  .spec {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 24px 34px;
+    align-items: start;
+    padding: 26px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .spec:last-child { border-bottom: 1px solid var(--rule); }
+  .spec .name { font-family: var(--font-mono); font-size: 13px; font-weight: 600; }
+  .spec .note { color: var(--muted-foreground); font-size: 14px; margin: 7px 0 0; max-width: 54ch; }
+  .verdict {
+    display: inline-block;
+    margin-left: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+    vertical-align: 2px;
+  }
+  .verdict.now { background: hsl(145 100% 38% / 0.16); color: var(--verdict-now); }
+  .verdict.risk { background: hsl(38 92% 50% / 0.18); color: var(--verdict-risk); }
+
+  .lockups { display: flex; flex-direction: column; gap: 8px; }
+  .lockup {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 13px 18px;
+    border-radius: var(--radius-lg);
+    border: 1px solid;
+    min-width: 320px;
+  }
+  .lockup.on-dark { background: var(--dark-bg); border-color: var(--dark-border); color: var(--dark-fg); }
+  .lockup.on-light { background: var(--light-bg); border-color: var(--light-border); color: var(--light-fg); }
+  .brand { display: flex; align-items: center; gap: 9px; }
+  .wordmark { font-size: 19px; font-weight: 700; letter-spacing: -0.035em; }
+  .sizes { display: flex; align-items: center; gap: 14px; margin-left: auto; }
+
+  svg { display: block; flex: none; }
+
+  footer {
+    color: var(--muted-foreground);
+    font-size: 13.5px;
+    border-top: 1px solid var(--rule);
+    padding-top: 22px;
+    max-width: 74ch;
+  }
+  footer code { color: var(--foreground); }
+
+  @media (max-width: 720px) {
+    .spec { grid-template-columns: minmax(0, 1fr); }
+    .lockup { min-width: 0; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs>
+    <linearGradient id="plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)"></stop>
+      <stop offset="100%" stop-color="hsl(145 100% 38%)"></stop>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header>
+    <p class="ledger">Mark exploration &mdash; round two</p>
+    <h1>Zenoglyphs</h1>
+    <p class="dek">Eight new marks for the rebrand, drawn in <code>node-z</code>&rsquo;s idiom &mdash; 24&times;24 viewBox, the one plasma gradient, <code>fill="none"</code> at the root &mdash; and shown beside the incumbent at the three sizes that actually decide it: 64px marketing, 24&ndash;26px header lockup, 16px favicon.</p>
+    <p class="dek">The name is the reason for the round. <em>Zenoglyphs</em> pointed at the act of inscribing, and the adopted mark answered it with a route traced between nodes. <em>Zenoglyphs</em> points at the artifact left behind &mdash; so most of what follows asks whether the mark should read as something <em>cut</em> rather than something <em>traced</em>.</p>
+  </header>
+
+  <section>
+    <header>
+      <h2>Contact sheet</h2>
+      <p class="dek">All nine at 64px, on the app&rsquo;s own ground.</p>
+    </header>
+    <div class="sheet" id="sheet"></div>
+  </section>
+
+  <section>
+    <header>
+      <h2>The 16px test</h2>
+      <p class="dek">Where the last round was decided, and where <code>fragment-z</code> lost: gaps that read as intent at header size read as dirt in a tab. Both grounds, real favicon scale.</p>
+    </header>
+    <div class="tabs">
+      <div class="tabrow on-dark" id="tabs-dark"></div>
+      <div class="tabrow on-light" id="tabs-light"></div>
+    </div>
+  </section>
+
+  <section>
+    <header>
+      <h2>In the lockup</h2>
+      <p class="dek">Each mark against the wordmark it now has to carry, with 24px and 16px alongside, on both themes.</p>
+    </header>
+    <div class="specimens" id="specimens"></div>
+  </section>
+
+  <footer>
+    Sources live beside this file: <code>lattice-z.svg</code>, <code>momentum-z.svg</code>, <code>chisel-z.svg</code>, <code>slotted-z.svg</code>, <code>rune-z.svg</code>, <code>seal-glyph-z.svg</code>, <code>stele-z.svg</code>, <code>coin-z.svg</code>. Each carries its own <code>defs</code> gradient so it stands alone as a file; this page declares <code>#plasma</code> once and shares it, which is the only difference between what is drawn here and what is on disk.
+  </footer>
+</div>
+
+<script>
+const MARKS = [
+  {
+    label: "node-z", current: true,
+    note: "The incumbent, kept here as the control. A single-weight Z route between four nodes — it reads as network, not as writing.",
+    svg: `<path d="M6,6L18,6L6,18L18,18" stroke="url(#plasma)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="6" cy="6" r="2" fill="url(#plasma)"/><circle cx="18" cy="6" r="1.6" fill="url(#plasma)"/>
+          <circle cx="6" cy="18" r="1.6" fill="url(#plasma)"/><circle cx="18" cy="18" r="2" fill="url(#plasma)"/>`
+  },
+  {
+    label: "lattice-z",
+    note: "The four corner nodes grown into the full seven-point lattice, the Z demoted to the route through it. Says block-lattice rather than chain — but the dots carry the mark and the letter goes quiet.",
+    svg: `<path d="M6,6H18L6,18H18" stroke="url(#plasma)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
+          <g fill="url(#plasma)"><circle cx="6" cy="6" r="2"/><circle cx="12" cy="6" r="1.5"/><circle cx="18" cy="6" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="6" cy="18" r="1.5"/><circle cx="12" cy="18" r="1.5"/><circle cx="18" cy="18" r="2"/></g>`
+  },
+  {
+    label: "momentum-z", risk: "16px",
+    note: "The same route, ticked rather than solid — a ledger advancing in discrete momenta, with the two ends struck solid so the letter still terminates.",
+    svg: `<path d="M6,6H18L6,18H18" stroke="url(#plasma)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2.6 2.2"/>
+          <circle cx="6" cy="6" r="1.9" fill="url(#plasma)"/><circle cx="18" cy="18" r="1.9" fill="url(#plasma)"/>`
+  },
+  {
+    label: "chisel-z",
+    note: "Three wedges, each tapering the way a chisel leaves a stroke. The most direct answer to the new name — glyphs began as cuneiform — and all fill, no stroke, so it keeps its weight at small sizes.",
+    svg: `<path d="M4,3.6L20,5.4L20,7.6L4,8.2Z M18.4,7L15.4,7L6.2,16.6L9.8,16.6Z M4,16.4L20,15.8L20,20.4L4,18.2Z" fill="url(#plasma)"/>`
+  },
+  {
+    label: "slotted-z",
+    note: "One continuous route with a hairline slot cut at each corner — fragment-z’s idea of an inscription assembled from separately addressed parts, but corner-to-corner, so the slots close up small instead of falling apart.",
+    svg: `<path d="M6,6H18L6,18H18" stroke="url(#plasma)" stroke-width="3" stroke-linecap="butt" stroke-dasharray="11 2 15 2 11"/>`
+  },
+  {
+    label: "rune-z",
+    note: "Mitred joins, square caps, one weight, and a bind-stroke struck across the diagonal. Nothing rounded anywhere — the radius token’s own logic, taken to the mark.",
+    svg: `<g stroke="url(#plasma)" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter">
+            <path d="M5.3,5.3H18.7L5.3,18.7H18.7"/><path d="M9.6,9.6L14.4,14.4"/></g>`
+  },
+  {
+    label: "seal-glyph-z",
+    note: "Last round’s strongest runner-up redrawn: the hexagonal seal that survived the favicon test, now an outline with the route inside it rather than a knockout slab.",
+    svg: `<path d="M12,2.3L20.4,7.15V16.85L12,21.7L3.6,16.85V7.15Z" stroke="url(#plasma)" stroke-width="1.6" stroke-linejoin="round" opacity="0.6"/>
+          <path d="M8.6,9H15.4L8.6,15H15.4" stroke="url(#plasma)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`
+  },
+  {
+    label: "stele-z", risk: "16px",
+    note: "The glyph on its tablet — an arched stone with the Z cut into the face. The most literal about what the project does, and the most at risk small: two stroke weights inside 16px is a lot to ask.",
+    svg: `<path d="M4.6,21.4V9.6a7.4,7.4 0 0 1 14.8,0V21.4Z" stroke="url(#plasma)" stroke-width="1.6" stroke-linejoin="round" opacity="0.6"/>
+          <path d="M8.8,9.4H15.2L8.8,16.2H15.2" stroke="url(#plasma)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`
+  },
+  {
+    label: "coin-z",
+    note: "The Z struck on a disc. Sits naturally in a row of round token marks beside TokenIcon and ZnnLogo — which is either the point or the objection, since an inscription index is not a token.",
+    svg: `<circle cx="12" cy="12" r="9.2" stroke="url(#plasma)" stroke-width="1.6" opacity="0.6"/>
+          <path d="M8.4,8.6H15.6L8.4,15.4H15.6" stroke="url(#plasma)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`
+  }
+];
+
+const glyph = (m, size) =>
+  `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" role="img" aria-label="${m.label}">${m.svg}</svg>`;
+
+document.getElementById("sheet").innerHTML = MARKS.map(m =>
+  `<div class="cell${m.current ? " is-current" : ""}">${glyph(m, 64)}<span class="cap">${m.label}${m.current ? "<br>current" : ""}</span></div>`
+).join("");
+
+for (const ground of ["dark", "light"]) {
+  document.getElementById("tabs-" + ground).innerHTML =
+    MARKS.map(m => `<span class="tab">${glyph(m, 16)}${m.label}</span>`).join("");
+}
+
+document.getElementById("specimens").innerHTML = MARKS.map(m => `
+  <article class="spec">
+    <div>
+      <span class="name">${m.label}</span>${m.current ? '<span class="verdict now">In use</span>' : ""}${m.risk ? `<span class="verdict risk">watch ${m.risk}</span>` : ""}
+      <p class="note">${m.note}</p>
+    </div>
+    <div class="lockups">
+      ${["dark", "light"].map(g => `
+        <div class="lockup on-${g}">
+          <span class="brand">${glyph(m, 26)}<span class="wordmark">zenoglyphs</span></span>
+          <span class="sizes">${glyph(m, 24)}${glyph(m, 16)}</span>
+        </div>`).join("")}
+    </div>
+  </article>`
+).join("");
+</script>
+</body>
+</html>

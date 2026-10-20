@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- Seal glyph Z — the hexagonal seal that was the last round's strongest
+       runner-up (seal-z, best of the six at 16px), redrawn as an outline with
+       node-z's route inside instead of a knockout. Keeps the silhouette that
+       survived the favicon test; loses the solid slab that made it read as a
+       different family from the adopted mark. -->
+  <defs>
+    <linearGradient id="zg-seal-plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)" />
+      <stop offset="100%" stop-color="hsl(145 100% 38%)" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M12,2.3L20.4,7.15V16.85L12,21.7L3.6,16.85V7.15Z"
+    stroke="url(#zg-seal-plasma)"
+    stroke-width="1.6"
+    stroke-linejoin="round"
+    opacity="0.6"
+  />
+  <path
+    d="M8.6,9H15.4L8.6,15H15.4"
+    stroke="url(#zg-seal-plasma)"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

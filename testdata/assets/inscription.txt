@@ -1,0 +1,12 @@
+<meta charset="UTF-8">
+<script>
+    // a quick way to test if your inscription might work in certain environments before inscribing +++ bop.xbt
+</script>
+
+<body style="margin: 0">
+<div id="wrapper" style="background: #000; color: #ff9900; font-family: Arial, sans-serif; letter-spacing: 1px; display: flex; flex-direction: column; height: 100%">
+  <p>
+    ⚔️ on-chain inscription tester
+  </p>
+
+  <textarea style="border-radius: 4px; box-shadow:0 0 20px 2px #ff9900; border: 2px ridge #ff9900; height: 80%; width: 90

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- Rune Z — mitred joins, square caps, one weight, plus a bind-stroke
+       struck across the diagonal. Nothing rounded anywhere, which is the
+       radius token's own logic ("tight, echoing the angular Z") taken to the
+       mark. Reads as a carved character rather than a typed letter. -->
+  <defs>
+    <linearGradient id="zg-rune-plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)" />
+      <stop offset="100%" stop-color="hsl(145 100% 38%)" />
+    </linearGradient>
+  </defs>
+  <g
+    stroke="url(#zg-rune-plasma)"
+    stroke-width="2.6"
+    stroke-linecap="square"
+    stroke-linejoin="miter"
+  >
+    <path d="M5.3,5.3H18.7L5.3,18.7H18.7" />
+    <path d="M9.6,9.6L14.4,14.4" />
+  </g>
+</svg>

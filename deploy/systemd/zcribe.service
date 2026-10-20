@@ -1,0 +1,55 @@
+[Unit]
+Description=zcribe — Zenoglyphs indexer, API and content origin
+Documentation=https://github.com/Zenoglyphs-VM/zenoglyphs
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=zcribe
+Group=zcribe
+WorkingDirectory=/var/lib/zcribe
+
+# Optional and absent by default (the leading '-' makes a missing file not an
+# error): uncomment once /etc/zcribe/admin.env exists to turn on the admin
+# panel at /admin. See deploy/README.md §5 and deploy/admin.env.example.
+#EnvironmentFile=-/etc/zcribe/admin.env
+
+# -start is the launch momentum and is part of the state-root base case
+# (A-25). Every operator must use the same value or no two indexers will ever
+# agree on a state root. Set it once, publish it, never change it.
+ExecStart=/usr/local/bin/zcribe serve \
+  -node http://127.0.0.1:35997 \
+  -db /var/lib/zcribe/zenoglyphs.db \
+  -api 127.0.0.1:8710 \
+  -content 127.0.0.1:8711 \
+  -content-origin https://content.zenon.foo \
+  -start 1 \
+  -confirmations 60 \
+  -snapshot-interval 120 \
+  -snapshot-retain 360 \
+  -scripts
+
+Restart=always
+RestartSec=5s
+
+# A crash mid-momentum is safe to restart into: the event log is the source of
+# truth and every projection write is idempotent, so the next pass re-reads
+# from the same height and lands in the same place.
+
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+ReadWritePaths=/var/lib/zcribe
+
+[Install]
+WantedBy=multi-user.target

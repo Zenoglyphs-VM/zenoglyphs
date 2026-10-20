@@ -1,0 +1,55 @@
+@import "tailwindcss";
+@import "nom-ui/style.css";
+@source "../node_modules/nom-ui/src";
+
+/* Rendered inscriptions.
+ *
+ * Everything above is the design system. What follows styles bytes this viewer
+ * did not write — inscribed markdown and plain text — so it stays legible
+ * inside a card without letting an inscription restyle the page around it. The
+ * rules are scoped to .inscribed-doc and set only what prose needs. */
+@layer components {
+  .inscribed-doc {
+    @apply text-sm leading-relaxed break-words;
+  }
+  .inscribed-doc h1 { @apply mt-6 mb-3 text-xl font-semibold first:mt-0; }
+  .inscribed-doc h2 { @apply mt-6 mb-3 text-lg font-semibold first:mt-0; }
+  .inscribed-doc h3 { @apply mt-5 mb-2 text-base font-semibold first:mt-0; }
+  .inscribed-doc p { @apply my-3; }
+  .inscribed-doc ul { @apply my-3 list-disc pl-5; }
+  .inscribed-doc ol { @apply my-3 list-decimal pl-5; }
+  .inscribed-doc li { @apply my-1; }
+  .inscribed-doc hr { @apply my-6 border-border; }
+  .inscribed-doc a { @apply text-info underline underline-offset-4; }
+  .inscribed-doc blockquote { @apply my-3 border-l-2 border-border pl-4 text-muted-foreground; }
+  .inscribed-doc code { @apply rounded bg-muted px-1 py-0.5 font-mono text-xs; }
+  .inscribed-doc pre { @apply my-3 overflow-x-auto rounded-md bg-muted p-3; }
+  .inscribed-doc pre code { @apply bg-transparent p-0; }
+  .inscribed-doc table { @apply my-3 w-full border-collapse text-sm; }
+  .inscribed-doc th {
+    @apply border-b border-border px-2 py-1.5 text-left text-ledger text-muted-foreground;
+  }
+  .inscribed-doc td { @apply border-b border-border px-2 py-1.5 align-top; }
+  .inscribed-doc img { @apply max-w-full; }
+}
+
+/* The docs page.
+ *
+ * Separate from .inscribed-doc above and deliberately so: that one styles
+ * bytes someone else wrote and has to be defensive, this one styles prose
+ * this app ships and can lean on the design system directly. Keeping them
+ * apart means a change to how documentation reads can never loosen how
+ * untrusted markdown renders. */
+@layer components {
+  .doc p { @apply my-3 text-sm leading-relaxed text-muted-foreground; }
+  .doc ul { @apply my-3 list-disc space-y-1.5 pl-5 text-sm text-muted-foreground; }
+  .doc ol { @apply my-3 list-decimal space-y-1.5 pl-5 text-sm text-muted-foreground; }
+  .doc strong { @apply font-medium text-foreground; }
+  .doc a { @apply text-info underline underline-offset-4; }
+  .doc code { @apply rounded bg-muted px-1 py-0.5 font-mono text-xs text-foreground; }
+  .doc pre {
+    @apply my-4 overflow-x-auto rounded-md border border-border bg-muted/50 p-3.5
+           font-mono text-xs leading-relaxed;
+  }
+  .doc pre code { @apply bg-transparent p-0 text-foreground; }
+}

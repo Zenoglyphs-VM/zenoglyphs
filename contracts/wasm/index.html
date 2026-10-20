@@ -1,0 +1,74 @@
+<!doctype html><meta charset="utf-8">
+<title>Zenoglyphs · WebAssembly composite</title>
+<style>
+  :root{--bg:#0b0d10;--fg:#e6e9ef;--dim:#8b94a7;--ok:#5ad19b;--bad:#ff6b6b;--line:#1e242e}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+       font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+       display:flex;flex-direction:column;align-items:center;padding:24px 16px;gap:18px}
+  h1{font-size:15px;font-weight:600;letter-spacing:.02em;margin:0}
+  h1 span{color:var(--dim);font-weight:400}
+  canvas{width:min(560px,92vw);aspect-ratio:3/2;image-rendering:pixelated;
+         border:1px solid var(--line);border-radius:6px;background:#000;display:block}
+  table{border-collapse:collapse;font-size:12px;width:min(560px,92vw)}
+  td{padding:3px 10px 3px 0;vertical-align:top;border-bottom:1px solid var(--line)}
+  td:first-child{color:var(--dim);white-space:nowrap;width:9.5rem}
+  .ok{color:var(--ok)} .bad{color:var(--bad)}
+  .note{color:var(--dim);font-size:11.5px;max-width:min(560px,92vw);text-align:center}
+  code{color:var(--fg)}
+</style>
+<h1>WebAssembly composite <span>— two inscriptions, linked at runtime</span></h1>
+<canvas id="c" width="480" height="320"></canvas>
+<table id="t"></table>
+<p class="note">
+  Nothing here is bundled. This page fetched two <code>application/wasm</code>
+  inscriptions through its own composite slots, instantiated the kernel, then
+  instantiated the renderer <em>against the kernel's exports</em>. The CSP pins
+  every fetch to the content origin, so it can compose itself out of other
+  inscriptions and out of nothing else.
+</p>
+<script>
+const rows=[]; const T=document.getElementById('t');
+const put=(k,v,cls)=>{rows.push([k,v,cls]);T.innerHTML=rows.map(([k,v,c])=>
+  `<tr><td>${k}</td><td class="${c||''}">${v}</td></tr>`).join('')};
+
+(async () => {
+  try {
+    // Slot 0 = the kernel, slot 1 = the renderer. Both are 301s to the
+    // imported inscription's own canonical URL — nothing is rewritten.
+    const [libRes, appRes] = await Promise.all([fetch('0'), fetch('1')]);
+    const libBytes = new Uint8Array(await libRes.clone().arrayBuffer());
+    const appBytes = new Uint8Array(await appRes.clone().arrayBuffer());
+
+    put('slot 0 · kernel', `${libBytes.length} B · <code>${libRes.headers.get('content-type')}</code>`);
+    put('slot 1 · renderer', `${appBytes.length} B · <code>${appRes.headers.get('content-type')}</code>`);
+
+    // Streaming instantiation only works if the server really declares
+    // application/wasm — so this doubles as a check on the allowlist entry.
+    let how = 'instantiateStreaming';
+    let lib;
+    try { lib = (await WebAssembly.instantiateStreaming(fetch('0'), {})).instance; }
+    catch { how = 'instantiate(ArrayBuffer)'; lib = (await WebAssembly.instantiate(libBytes, {})).instance; }
+    put('kernel loaded via', how, 'ok');
+
+    // The linkage: the renderer's imports are satisfied by the kernel's exports.
+    const app = (await WebAssembly.instantiate(appBytes, {lib:{iter:lib.exports.iter}})).instance;
+    put('linkage', 'app.imports.lib.iter &larr; lib.exports.iter', 'ok');
+
+    const cv=document.getElementById('c'), ctx=cv.getContext('2d');
+    const W=cv.width, H=cv.height, MAX=255;
+    const t0=performance.now();
+    app.exports.render(W,H,MAX);
+    const ms=performance.now()-t0;
+
+    const img=ctx.createImageData(W,H);
+    img.data.set(new Uint8Array(app.exports.mem.buffer, 0, W*H*4));
+    ctx.putImageData(img,0,0);
+
+    put('render', `${W}&times;${H} @ ${MAX} iterations in ${ms.toFixed(1)} ms`, 'ok');
+    put('total wasm', `${libBytes.length+appBytes.length} B on chain`, 'ok');
+  } catch (e) {
+    put('FAILED', e.constructor.name+': '+e.message, 'bad');
+  }
+})();
+</script>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Wide head — a squat head broader than the torso under it. Reads as a character rather than a diagram, and the oversized head is what carries at small sizes. -->
+  <defs>
+    <linearGradient id="plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)"/>
+      <stop offset="100%" stop-color="hsl(145 100% 38%)"/>
+    </linearGradient>
+    <radialGradient id="ink" cx="0.5" cy="0.36" r="0.75">
+      <stop offset="0%" stop-color="hsl(146 42% 14%)"/>
+      <stop offset="62%" stop-color="hsl(150 40% 8%)"/>
+      <stop offset="100%" stop-color="hsl(152 38% 4%)"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#ink)"/>
+  <mask id="cut">
+    <rect width="512" height="512" fill="#000"/>
+    <rect x="150" y="126" width="212" height="132" rx="46" fill="#fff"/>
+    <rect x="236" y="252" width="40" height="26" fill="#fff"/>
+    <rect x="170" y="272" width="172" height="148" rx="34" fill="#fff"/>
+    <circle cx="206" cy="184" r="22" fill="#000"/>
+    <circle cx="306" cy="184" r="22" fill="#000"/>
+    <rect x="218" y="222" width="76" height="16" rx="8" fill="#000"/>
+    <g transform="translate(190,268) scale(5.9)" fill="#000">
+      <path d="M4,4H20V8H4ZM20,8L8,16L4,16L16,8ZM4,16H20V20H4Z"/>
+    </g>
+  </mask>
+  <rect width="512" height="512" fill="url(#plasma)" mask="url(#cut)"/>
+</svg>

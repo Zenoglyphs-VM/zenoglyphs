@@ -1,0 +1,169 @@
+{
+  "note": "Canonical CBOR (RFC 8949 §4.2). sha3_256 is over the `cbor` bytes, which are exactly what goes in AccountBlock.data.",
+  "prefix": "glyph",
+  "protocol": "zenoglyphs",
+  "vectors": [
+    {
+      "name": "mint-text-standalone",
+      "description": "A complete mint in one block: no pHash, no tHash, content inline as a byte string.",
+      "opcode": 0,
+      "opcodeName": "mint",
+      "object": {
+        "data": "68656c6c6f2c206d6f6d656e74756d",
+        "decimals": 0,
+        "mime": "text/plain;charset=utf-8",
+        "name": "hello",
+        "supply": 1
+      },
+      "cbor": "a4617065676c797068617601626f70006464617461a564646174614f68656c6c6f2c206d6f6d656e74756d646d696d657818746578742f706c61696e3b636861727365743d7574662d38646e616d656568656c6c6f66737570706c790168646563696d616c7300",
+      "sha3_256": "d77ef18c09b2c7647a2dfb347ea1d038c8ccca87ea255a777946c568bed31b70"
+    },
+    {
+      "name": "mint-full-metadata",
+      "description": "Every optional mint field populated, including a collection reference and attributes.",
+      "opcode": 0,
+      "opcodeName": "mint",
+      "object": {
+        "attributes": "a266617274697374677361746f7368696765646974696f6e01",
+        "collection": "1111111111111111111111111111111111111111111111111111111111111111",
+        "data": "89504e47",
+        "decimals": 8,
+        "description": "every field",
+        "mime": "image/png",
+        "name": "Full",
+        "supply": 1000
+      },
+      "cbor": "a4617065676c797068617601626f70006464617461a864646174614489504e47646d696d6569696d6167652f706e67646e616d656446756c6c66737570706c791903e868646563696d616c73086a61747472696275746573a266617274697374677361746f7368696765646974696f6e016a636f6c6c656374696f6e582011111111111111111111111111111111111111111111111111111111111111116b6465736372697074696f6e6b6576657279206669656c64",
+      "sha3_256": "9cc3f6b2af05146556ba586eff2513e3a7ab5d65f24ffc4aa9416c0fa53b3d04"
+    },
+    {
+      "name": "mint-with-extensions",
+      "description": "A mint carrying the optional-extension map at both envelope and payload level. Every key inside ext is ignorable: an indexer that does not recognise one still decodes the ZDU, still validates it, and still computes identical state.",
+      "opcode": 0,
+      "opcodeName": "mint",
+      "object": {
+        "data": "6869",
+        "decimals": 0,
+        "ext": "a2676c6963656e7365634343306b756e6b6e6f776e546f5631182a",
+        "mime": "text/plain;charset=utf-8",
+        "name": "Extended",
+        "supply": 1
+      },
+      "cbor": "a5617065676c797068617601626f700063657874a2676c6963656e7365634343306b756e6b6e6f776e546f5631182a6464617461a663657874a2676c6963656e7365634343306b756e6b6e6f776e546f5631182a6464617461426869646d696d657818746578742f706c61696e3b636861727365743d7574662d38646e616d6568457874656e64656466737570706c790168646563696d616c7300",
+      "sha3_256": "142dc9fd2e5ea2c1ab691be596b0b2bfd92112855726351c7dadf622a94860b7"
+    },
+    {
+      "name": "mint-composite",
+      "description": "A composite: a mint declaring two imports in slot order. Slot n is served at /content/{id}/n, so the inscribed bytes reference an import as the relative URL \"0\" or \"1\" and never embed a hash. The indexer records the edges and resolves nothing: a ref to an id that does not exist is a dangling edge, not an invalid mint.",
+      "opcode": 0,
+      "opcodeName": "mint",
+      "object": {
+        "data": "3c736372697074207372633d2230223e3c2f7363726970743e3c696d67207372633d2231223e",
+        "decimals": 0,
+        "mime": "text/html;charset=utf-8",
+        "name": "Composite",
+        "supply": 1
+      },
+      "cbor": "a4617065676c797068617601626f70006464617461a6646461746158263c736372697074207372633d2230223e3c2f7363726970743e3c696d67207372633d2231223e646d696d6577746578742f68746d6c3b636861727365743d7574662d38646e616d6569436f6d706f73697465647265667382582011111111111111111111111111111111111111111111111111111111111111115820222222222222222222222222222222222222222222222222222222222222222266737570706c790168646563696d616c7300",
+      "sha3_256": "789216e51e855921462118c2b8d17aa633523a5558b9a969074905150212e42b"
+    },
+    {
+      "name": "mint-multipart-head",
+      "description": "The head of a multi-part chain: carries metadata, the first chunk, and both hashes.",
+      "opcode": 0,
+      "opcodeName": "mint",
+      "object": {
+        "data": "89504e470d",
+        "decimals": 0,
+        "mime": "image/png",
+        "name": "big",
+        "supply": 1
+      },
+      "pHash": "1111111111111111111111111111111111111111111111111111111111111111",
+      "tHash": "2222222222222222222222222222222222222222222222222222222222222222",
+      "cbor": "a6617065676c797068617601626f70006464617461a564646174614589504e470d646d696d6569696d6167652f706e67646e616d656362696766737570706c790168646563696d616c73006570486173685820111111111111111111111111111111111111111111111111111111111111111165744861736858202222222222222222222222222222222222222222222222222222222222222222",
+      "sha3_256": "7f51c1b97353e3d8d1fa577c2c9cb5e34f666013957f39b41fb99568321828ac"
+    },
+    {
+      "name": "multi-intermediary",
+      "description": "A non-terminal chunk: a bare byte string payload plus pHash. Creates no state alone.",
+      "opcode": 2,
+      "opcodeName": "multi",
+      "object": "6368756e6b2d6279746573",
+      "pHash": "1111111111111111111111111111111111111111111111111111111111111111",
+      "cbor": "a5617065676c797068617601626f700264646174614b6368756e6b2d627974657365704861736858201111111111111111111111111111111111111111111111111111111111111111",
+      "sha3_256": "f143a88fd72a698926c5f1a60c993ec3e19de89c4223249e29f5b77182c3078a"
+    },
+    {
+      "name": "multi-tail",
+      "description": "The tail of a chain: a chunk with neither hash. Published first, referenced by tHash.",
+      "opcode": 2,
+      "opcodeName": "multi",
+      "object": "7461696c2d6279746573",
+      "cbor": "a4617065676c797068617601626f700264646174614a7461696c2d6279746573",
+      "sha3_256": "c0d34c1a001f1355e7a0b6a8f1ebc0baf85ad31c3f76e4a66515e389e5606222"
+    },
+    {
+      "name": "transfer",
+      "description": "Moves 42 units. The carrier block's own amount and token standard are ignored.",
+      "opcode": 1,
+      "opcodeName": "transfer",
+      "object": {
+        "a": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+        "n": 42
+      },
+      "cbor": "a4617065676c797068617601626f70016464617461a261615820aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899616e182a",
+      "sha3_256": "5532c6d57569365944aac2508e4c6160803cc0edc0dfaeb4142edc2c2ea3b402"
+    },
+    {
+      "name": "create-collection",
+      "description": "Creates a collection; the collection id is the carrier block's hash.",
+      "opcode": 3,
+      "opcodeName": "createCollection",
+      "object": {
+        "description": "the first",
+        "name": "Genesis",
+        "url": "https://zenon.network"
+      },
+      "cbor": "a4617065676c797068617601626f70036464617461a36375726c7568747470733a2f2f7a656e6f6e2e6e6574776f726b646e616d656747656e657369736b6465736372697074696f6e69746865206669727374",
+      "sha3_256": "11c1d617b6d300a90852e06fa71e9f5bdffde7723058bfe6744293db9e0e67dd"
+    },
+    {
+      "name": "create-dispenser",
+      "description": "Escrows 10 units at 100000000 per unit, priced in ZNN.",
+      "opcode": 4,
+      "opcodeName": "createDispenser",
+      "object": {
+        "a": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+        "n": 10,
+        "price": 100000000,
+        "zts": "0102030405060708090a"
+      },
+      "cbor": "a4617065676c797068617601626f70046464617461a461615820aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899616e0a637a74734a0102030405060708090a6570726963651a05f5e100",
+      "sha3_256": "1ddeb06473c601d4df6b047727f414332f8d7b09ab891e5fe54a54205cc580d0"
+    },
+    {
+      "name": "cancel-dispenser",
+      "description": "Releases escrow back to the issuer.",
+      "opcode": 5,
+      "opcodeName": "cancelDispenser",
+      "object": {
+        "d": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "cbor": "a4617065676c797068617601626f70056464617461a1616458201111111111111111111111111111111111111111111111111111111111111111",
+      "sha3_256": "79942e04236eb28e5831dd9cb30de1111a93dea58a8ab1b38e8919cca0eefaba"
+    },
+    {
+      "name": "dispenser-purchase",
+      "description": "Buys from a dispenser; the carrier block is the payment and must go to the issuer.",
+      "opcode": 6,
+      "opcodeName": "dispenserPurchase",
+      "object": {
+        "d": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      "cbor": "a4617065676c797068617601626f70066464617461a1616458201111111111111111111111111111111111111111111111111111111111111111",
+      "sha3_256": "261812d14d8f61c7f4ad5a2cebbab1ff2ed56971d403749ee0de193d3dc1c600"
+    }
+  ],
+  "version": 1
+}

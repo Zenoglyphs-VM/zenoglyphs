@@ -1,0 +1,37 @@
+[Unit]
+Description=zcribe — Telegram front end
+After=network-online.target zcribe.service
+Wants=network-online.target
+# The bot is an ordinary API client with no database access, so it can start
+# before the indexer has caught up and simply reports the lag.
+BindsTo=zcribe.service
+
+[Service]
+Type=simple
+User=zcribe
+Group=zcribe
+
+# The token never appears on the command line: arguments land in the process
+# table, where any local user can read them. 0600, owned by the service user.
+EnvironmentFile=/etc/zcribe/bot.env
+
+ExecStart=/usr/local/bin/zcribe bot \
+  -api http://127.0.0.1:8710 \
+  -channel ${ZCRIBE_TELEGRAM_CHANNEL} \
+  -announce
+
+Restart=always
+RestartSec=10s
+
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+RestrictAddressFamilies=AF_INET AF_INET6
+RestrictNamespaces=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+
+[Install]
+WantedBy=multi-user.target

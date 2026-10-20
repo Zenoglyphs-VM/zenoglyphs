@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- Slotted Z — one continuous Z route with a hairline slot cut at each
+       corner. Same idea fragment-z reached for (an inscription assembled from
+       separately addressed parts) but the parts stay corner-to-corner, so the
+       gaps read as joints at header size and simply close up at 16px instead
+       of falling apart. Dash pattern sums to the path length: 11+2+15+2+11. -->
+  <defs>
+    <linearGradient id="zg-slotted-plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)" />
+      <stop offset="100%" stop-color="hsl(145 100% 38%)" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M6,6H18L6,18H18"
+    stroke="url(#zg-slotted-plasma)"
+    stroke-width="3"
+    stroke-linecap="butt"
+    stroke-dasharray="11 2 15 2 11"
+  />
+</svg>

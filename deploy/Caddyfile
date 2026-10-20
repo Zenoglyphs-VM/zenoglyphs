@@ -1,0 +1,57 @@
+# zcribe — two hostnames, two origins.
+#
+# The split is not a deployment preference. The MIME allowlist includes
+# text/html and image/svg+xml, both of which execute script, so inscribed bytes
+# are served from an origin that has nothing else on it (spec R-8.2). Serving
+# them beside the API would hand attacker-authored script the API's origin.
+#
+# Replace both hostnames. Caddy obtains certificates for them automatically.
+
+# ---- the API and the viewer -------------------------------------------------
+
+glyphs.zenon.foo {
+	encode zstd gzip
+
+	# The API publishes a moving sync height; a cached copy of it is a stale
+	# claim about the chain. The viewer's own assets are small and embedded.
+	header Cache-Control "no-store"
+
+	# The viewer is an ordinary first-party page and gets ordinary hardening.
+	# Inscribed content never reaches this origin — it is loaded in an iframe
+	# pointed at the content host — so frame-src names that host and nothing
+	# on this one has to relax for it.
+	header {
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Frame-Options "DENY"
+		Content-Security-Policy "default-src 'self'; img-src 'self' https://content.zenon.foo data:; media-src 'self' https://content.zenon.foo; frame-src https://content.zenon.foo; connect-src 'self' https://content.zenon.foo; style-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'none'; object-src 'none'"
+		-Server
+	}
+
+	reverse_proxy 127.0.0.1:8710
+}
+
+# ---- the content origin -----------------------------------------------------
+
+content.zenon.foo {
+	encode zstd gzip
+
+	# Nothing is added to the response here. The indexer builds a per-response
+	# Content-Security-Policy that carries the sandbox and pins every fetch
+	# directive to this origin; a policy added by the proxy would be merged
+	# with it, and merging two CSPs takes the intersection — which would
+	# silently break recursion or silently loosen the sandbox depending on
+	# which directive won.
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		-Server
+	}
+
+	reverse_proxy 127.0.0.1:8711 {
+		# Redirects from the origin are relative (/content/<id>/), so there is
+		# no Location rewriting to do and no way for the upstream port to leak
+		# into a public URL.
+		header_up Host {host}
+	}
+}

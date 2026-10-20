@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- Coin Z — the Z struck on a disc, the way a denomination is struck. Sits
+       naturally beside TokenIcon/ZnnLogo in a row of round token marks, which
+       is either the point or the objection: an inscription index is not a
+       token, and this mark says token. -->
+  <defs>
+    <linearGradient id="zg-coin-plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)" />
+      <stop offset="100%" stop-color="hsl(145 100% 38%)" />
+    </linearGradient>
+  </defs>
+  <circle
+    cx="12" cy="12" r="9.2"
+    stroke="url(#zg-coin-plasma)"
+    stroke-width="1.6"
+    opacity="0.6"
+  />
+  <path
+    d="M8.4,8.6H15.6L8.4,15.4H15.6"
+    stroke="url(#zg-coin-plasma)"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

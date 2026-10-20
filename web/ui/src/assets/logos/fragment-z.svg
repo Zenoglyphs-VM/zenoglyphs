@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- Fragment Z — three unconnected strokes that read as a Z only through
+       alignment, with the gaps left visible. The protocol's own composite
+       inscriptions are assembled from separately addressed parts (spec
+       R-8.x, "slot n" — see internal/api's handleRefSlot); this is that idea
+       read back as a mark, instead of the single unbroken stroke the
+       current mark uses. -->
+  <defs>
+    <linearGradient id="zcribe-fragment-plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)" />
+      <stop offset="100%" stop-color="hsl(145 100% 38%)" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M8,4H20V8H8ZM4,16H16V20H4ZM17,10L10,15L7,15L14,10Z"
+    fill="url(#zcribe-fragment-plasma)"
+  />
+</svg>

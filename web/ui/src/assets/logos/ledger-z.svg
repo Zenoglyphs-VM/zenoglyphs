@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- Ledger Z — a bold, straight-edged block Z, no rounding.
+       The system's network glyphs (az / bridge / pillar / sentinel) stay
+       sharp-cornered on purpose; this keeps that discipline on the app's own
+       mark too, rather than borrowing the card/button radius onto a glyph.
+       Three tiling shapes (top bar, diagonal band, bottom bar) share exact
+       vertices, so they fill as one solid Z with no seams. -->
+  <defs>
+    <linearGradient id="zcribe-ledger-z-plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)" />
+      <stop offset="100%" stop-color="hsl(145 100% 38%)" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M4,4H20V8H4ZM20,8L8,16L4,16L16,8ZM4,16H20V20H4Z"
+    fill="url(#zcribe-ledger-z-plasma)"
+  />
+</svg>

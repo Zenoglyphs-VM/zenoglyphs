@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- Inscribed chip — a Z cut as a knockout through a tight-radius square.
+       Reads as a stamped die rather than a letterform, closer to what
+       "inscribing" means literally than a drawn Z is. The cut is real
+       transparency (fill-rule="evenodd"), not a hardcoded background color,
+       so it shows through correctly on both light and dark chrome. -->
+  <defs>
+    <linearGradient id="zcribe-chip-plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)" />
+      <stop offset="100%" stop-color="hsl(145 100% 38%)" />
+    </linearGradient>
+  </defs>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M6,2H18A4,4 0 0 1 22,6V18A4,4 0 0 1 18,22H6A4,4 0 0 1 2,18V6A4,4 0 0 1 6,2Z
+       M7,7H17V9.5H7ZM17,9.5L9.5,14.5L7,14.5L14.5,9.5ZM7,14.5H17V17H7Z"
+    fill="url(#zcribe-chip-plasma)"
+  />
+</svg>

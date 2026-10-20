@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- Seal Z — the same knockout Z as inscribed-chip, inside a hexagonal
+       seal instead of a square. Reads best small (16px favicon scale),
+       where a contained badge holds its shape better than a loose
+       letterform does. -->
+  <defs>
+    <linearGradient id="zcribe-seal-plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)" />
+      <stop offset="100%" stop-color="hsl(145 100% 38%)" />
+    </linearGradient>
+  </defs>
+  <path
+    fill-rule="evenodd"
+    clip-rule="evenodd"
+    d="M8,2H16L21,12L16,22H8L3,12Z
+       M7,7H17V9.5H7ZM17,9.5L9.5,14.5L7,14.5L14.5,9.5ZM7,14.5H17V17H7Z"
+    fill="url(#zcribe-seal-plasma)"
+  />
+</svg>

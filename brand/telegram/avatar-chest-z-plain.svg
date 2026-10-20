@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Plain — the liked figure with the antenna and arms removed. Everything reclaims the space they took: bigger head, bigger torso, bigger Z. -->
+  <defs>
+    <linearGradient id="plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)"/>
+      <stop offset="100%" stop-color="hsl(145 100% 38%)"/>
+    </linearGradient>
+    <radialGradient id="ink" cx="0.5" cy="0.36" r="0.75">
+      <stop offset="0%" stop-color="hsl(146 42% 14%)"/>
+      <stop offset="62%" stop-color="hsl(150 40% 8%)"/>
+      <stop offset="100%" stop-color="hsl(152 38% 4%)"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#ink)"/>
+  <mask id="cut">
+    <rect width="512" height="512" fill="#000"/>
+    <rect x="168" y="118" width="176" height="150" rx="40" fill="#fff"/>
+    <rect x="236" y="262" width="40" height="28" fill="#fff"/>
+    <rect x="148" y="282" width="216" height="138" rx="38" fill="#fff"/>
+    <circle cx="212" cy="190" r="21" fill="#000"/>
+    <circle cx="300" cy="190" r="21" fill="#000"/>
+    <rect x="222" y="228" width="68" height="16" rx="8" fill="#000"/>
+    <g transform="translate(172,267) scale(7)" fill="#000">
+      <path d="M4,4H20V8H4ZM20,8L8,16L4,16L16,8ZM4,16H20V20H4Z"/>
+    </g>
+  </mask>
+  <rect width="512" height="512" fill="url(#plasma)" mask="url(#cut)"/>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- Lattice Z — node-z's four corner nodes grown into the full seven-point
+       lattice, with the Z traced as the route through it. Zenon's ledger is a
+       lattice, not a chain; this says that in the mark instead of implying a
+       single line of blocks. -->
+  <defs>
+    <linearGradient id="zg-lattice-plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)" />
+      <stop offset="100%" stop-color="hsl(145 100% 38%)" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M6,6H18L6,18H18"
+    stroke="url(#zg-lattice-plasma)"
+    stroke-width="1.7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.55"
+  />
+  <g fill="url(#zg-lattice-plasma)">
+    <circle cx="6" cy="6" r="2" />
+    <circle cx="12" cy="6" r="1.5" />
+    <circle cx="18" cy="6" r="1.5" />
+    <circle cx="12" cy="12" r="1.5" />
+    <circle cx="6" cy="18" r="1.5" />
+    <circle cx="12" cy="18" r="1.5" />
+    <circle cx="18" cy="18" r="2" />
+  </g>
+</svg>

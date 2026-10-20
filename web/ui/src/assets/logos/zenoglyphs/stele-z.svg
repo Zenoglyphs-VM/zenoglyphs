@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+  <!-- Stele Z — the glyph on its tablet: an arched stone outline with the Z
+       cut into the face. The most literal of the set about what the project
+       does (a thing is inscribed onto a surface that outlasts it), and the
+       most at risk small — two stroke weights inside 16px is a lot to ask. -->
+  <defs>
+    <linearGradient id="zg-stele-plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)" />
+      <stop offset="100%" stop-color="hsl(145 100% 38%)" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M4.6,21.4V9.6a7.4,7.4 0 0 1 14.8,0V21.4Z"
+    stroke="url(#zg-stele-plasma)"
+    stroke-width="1.6"
+    stroke-linejoin="round"
+    opacity="0.6"
+  />
+  <path
+    d="M8.8,9.4H15.2L8.8,16.2H15.2"
+    stroke="url(#zg-stele-plasma)"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

@@ -1,0 +1,88 @@
+<!doctype html><meta charset="utf-8">
+<title>Zenoglyphs · live WebAssembly composite</title>
+<style>
+  :root{--bg:#0b0d10;--fg:#e6e9ef;--dim:#8b94a7;--ok:#5ad19b;--line:#1e242e;--accent:#9d7bff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+       font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+       display:flex;flex-direction:column;align-items:center;padding:20px 16px 32px;gap:14px}
+  h1{font-size:15px;font-weight:600;margin:0}
+  h1 span{color:var(--dim);font-weight:400}
+  #wrap{position:relative;width:min(600px,94vw)}
+  canvas{width:100%;aspect-ratio:3/2;display:block;border:1px solid var(--line);
+         border-radius:6px;background:#000;cursor:crosshair;touch-action:none}
+  #hud{position:absolute;left:8px;bottom:8px;background:#0b0d10cc;border:1px solid var(--line);
+       border-radius:4px;padding:4px 8px;font-size:11px;color:var(--dim);pointer-events:none}
+  #hud b{color:var(--accent)}
+  .bar{display:flex;gap:16px;align-items:center;flex-wrap:wrap;width:min(600px,94vw);font-size:12px}
+  .bar label{color:var(--dim);display:flex;gap:6px;align-items:center}
+  input{width:74px;background:#11151b;color:var(--fg);border:1px solid var(--line);
+        border-radius:4px;padding:2px 6px;font:inherit;font-size:12px}
+  button{background:#11151b;color:var(--fg);border:1px solid var(--line);border-radius:4px;
+         padding:3px 10px;font:inherit;font-size:12px;cursor:pointer}
+  button:hover{border-color:var(--accent);color:var(--accent)}
+  table{border-collapse:collapse;font-size:11.5px;width:min(600px,94vw)}
+  td{padding:2px 10px 2px 0;border-bottom:1px solid var(--line)}
+  td:first-child{color:var(--dim);width:10rem;white-space:nowrap}
+  .ok{color:var(--ok)}
+  .note{color:var(--dim);font-size:11px;max-width:min(600px,94vw);text-align:center}
+</style>
+
+<h1>Live WebAssembly composite <span>— drag to pan · scroll to zoom</span></h1>
+<div id="wrap"><canvas id="c" width="600" height="400"></canvas><div id="hud">hover the canvas</div></div>
+<div class="bar">
+  <label>iterations <input id="it" type="number" min="16" max="2000" step="16" value="255"></label>
+  <button id="reset">reset view</button><span id="ms" class="ok"></span>
+</div>
+<table id="t"></table>
+<p class="note">
+  The page holds no state and does no arithmetic. Pointer and wheel events are
+  forwarded straight into the module; the viewport, the panning, the zoom and
+  the framebuffer all live inside WebAssembly fetched from two inscriptions.
+</p>
+
+<script type="module">
+const rows=new Map(), T=document.getElementById('t');
+const put=(k,v,c)=>{rows.set(k,[v,c]); T.innerHTML=[...rows].map(
+  ([k,[v,c]])=>`<tr><td>${k}</td><td class="${c||''}">${v}</td></tr>`).join('')};
+
+const [libRes, engRes] = await Promise.all([fetch('0'), fetch('1')]);
+put('slot 0 · kernel',   `${libRes.headers.get('content-length')} B · <code>${libRes.headers.get('content-type')}</code>`);
+put('slot 1 · engine',   `${engRes.headers.get('content-length')} B · <code>${engRes.headers.get('content-type')}</code>`);
+
+const lib = (await WebAssembly.instantiateStreaming(libRes, {})).instance;
+const e   = (await WebAssembly.instantiateStreaming(engRes, {lib:{iter:lib.exports.iter}})).instance.exports;
+put('linkage', 'engine.imports.lib.iter &larr; lib.exports.iter', 'ok');
+put('module owns', Object.keys(e).filter(k=>k!=='mem').sort().join(' · '), 'ok');
+
+const cv=document.getElementById('c'), ctx=cv.getContext('2d');
+const hud=document.getElementById('hud'), itIn=document.getElementById('it'), msOut=document.getElementById('ms');
+const W=cv.width, H=cv.height;
+e.init(W,H);
+
+const img=ctx.createImageData(W,H);
+function draw(){
+  const t0=performance.now(); e.render(); const ms=performance.now()-t0;
+  img.data.set(new Uint8Array(e.mem.buffer,0,W*H*4)); ctx.putImageData(img,0,0);
+  msOut.textContent=`${ms.toFixed(1)} ms/frame`;
+  const cy=e.cy();
+  put('viewport', `centre ${e.cx().toFixed(10)} ${cy<0?'&minus;':'+'} ${Math.abs(cy).toFixed(10)}i`);
+  put('zoom', `${e.zoomLevel().toFixed(2)}&times;`);
+}
+// client coords -> canvas pixels; the only arithmetic here, and it is the DOM's
+const at=ev=>{const r=cv.getBoundingClientRect();
+  return [Math.round((ev.clientX-r.left)/r.width*W), Math.round((ev.clientY-r.top)/r.height*H)]};
+
+cv.addEventListener('pointerdown',ev=>{cv.setPointerCapture(ev.pointerId); e.down(...at(ev))});
+cv.addEventListener('pointerup',  ev=>e.up());
+cv.addEventListener('pointermove',ev=>{
+  const p=at(ev);
+  if(ev.buttons&1){ e.move(...p); draw(); }
+  const n=e.probe(...p), max=+itIn.value;
+  hud.innerHTML=`pixel ${p[0]},${p[1]} &middot; lib.iter &rarr; <b>${n>=max?'in set':n}</b>`;
+});
+cv.addEventListener('wheel',ev=>{ev.preventDefault(); e.zoom(...at(ev), ev.deltaY<0?-1:1); draw()},{passive:false});
+itIn.addEventListener('input',()=>{e.setIter(+itIn.value); draw()});
+document.getElementById('reset').addEventListener('click',()=>{e.reset(); draw()});
+draw();
+</script>

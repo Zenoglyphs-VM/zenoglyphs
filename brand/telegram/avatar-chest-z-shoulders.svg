@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <!-- Sloped shoulders — the torso as a tapered trapezoid rather than a box, so the figure has a shoulder line without needing arms. The taper is a stroked polygon with round joins, which is why the corners match the head radius for free. -->
+  <defs>
+    <linearGradient id="plasma" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="hsl(120 86% 63%)"/>
+      <stop offset="100%" stop-color="hsl(145 100% 38%)"/>
+    </linearGradient>
+    <radialGradient id="ink" cx="0.5" cy="0.36" r="0.75">
+      <stop offset="0%" stop-color="hsl(146 42% 14%)"/>
+      <stop offset="62%" stop-color="hsl(150 40% 8%)"/>
+      <stop offset="100%" stop-color="hsl(152 38% 4%)"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#ink)"/>
+  <mask id="cut">
+    <rect width="512" height="512" fill="#000"/>
+    <rect x="170" y="116" width="172" height="148" rx="40" fill="#fff"/>
+    <rect x="236" y="258" width="40" height="30" fill="#fff"/>
+    <polygon points="208,304 304,304 348,392 164,392" fill="#fff"
+             stroke="#fff" stroke-width="44" stroke-linejoin="round"/>
+    <circle cx="212" cy="188" r="21" fill="#000"/>
+    <circle cx="300" cy="188" r="21" fill="#000"/>
+    <rect x="222" y="226" width="68" height="16" rx="8" fill="#000"/>
+    <g transform="translate(186,282) scale(6.2)" fill="#000">
+      <path d="M4,4H20V8H4ZM20,8L8,16L4,16L16,8ZM4,16H20V20H4Z"/>
+    </g>
+  </mask>
+  <rect width="512" height="512" fill="url(#plasma)" mask="url(#cut)"/>
+</svg>
