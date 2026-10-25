@@ -1,3 +1,18 @@
+> **Deprecated legacy Zenoglyphs / zcribe implementation.** The organization
+> marks this repository deprecated. It remains available as historical source.
+
+Read [legacy support status](SUPPORT.md), [project direction and migration scope](docs/MIGRATION.md)
+and [source/distribution provenance](docs/PROVENANCE.md) before relying on the
+examples below. No supported-version window or qualified migration is established
+by this documentation; separate ZVM repositories do not imply state compatibility.
+The existing [private security policy](SECURITY.md) remains the reporting route.
+
+The original README from `716d0b16672f43dd644b189d7af21c6767260540` follows unchanged.
+Its build/devnet examples are retained historical instructions, not a newly
+qualified deployment or migration procedure.
+
+---
+
 # Zenoglyphs
 
 A metaprotocol for Zenon's Network of Momentum: inscriptions carried in

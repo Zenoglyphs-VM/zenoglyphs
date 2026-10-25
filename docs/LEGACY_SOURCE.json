@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "kind": "legacy-source-context",
+  "repository": "Zenoglyphs-VM/zenoglyphs",
+  "revision": "716d0b16672f43dd644b189d7af21c6767260540",
+  "tree": "31e161ffbd1899b2d64686e76c2a4f7c5f97bd23",
+  "reachableHistoryCommitsAtRevision": 1,
+  "originalTopLevelBlobFiles": 323,
+  "publicStatus": {
+    "observedAt": "2026-10-25T07:13:13.687149+00:00",
+    "descriptionMarksDeprecated": true,
+    "archived": false,
+    "publishedGitHubReleases": 0,
+    "GitTags": 0
+  },
+  "selectedOriginalFiles": [
+    {
+      "path": "README.md",
+      "git_blob": "9ad8856723032d894e4dbaa02c43bb48e41fd648",
+      "sha256": "0af392cf55f2bee0843c0d4127c8f97e81a1ad27772f6f30ee582a1c61048bae",
+      "bytes": 1460
+    },
+    {
+      "path": "SECURITY.md",
+      "git_blob": "035ebb75613fe9d753833c7b1f98f467650f663f",
+      "sha256": "7598005a371e97c2f8a67c2de66a25cd3dbbbba6274b47a86e728a899bb21c1c",
+      "bytes": 668
+    },
+    {
+      "path": "LICENSE",
+      "git_blob": "f288702d2fa16d3cdf0035b15a9fcbc552cd88e7",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "bytes": 35149
+    },
+    {
+      "path": "NOTICE.md",
+      "git_blob": "8b1588a1e72f7b3fa2d794477b71e8a982c08914",
+      "sha256": "80f14cb28a40c95a895fc81767461ae185b841a369acec1fa29ff7da6a3a849d",
+      "bytes": 566
+    },
+    {
+      "path": "ASSUMPTIONS.md",
+      "git_blob": "521d3248986016d948d5afd74e4cba0e22c7ff3e",
+      "sha256": "7619fcf238ac5c4d196f648d48253ea6fa3b8df90134b4f4488854ba7cc0d842",
+      "bytes": 61617
+    },
+    {
+      "path": "REVIEW-ADVERSARIAL.md",
+      "git_blob": "a92d6157cc88e86e594530466b02b46869bca782",
+      "sha256": "b6290056ece0023061a821fa59d1221da1f7652c2d758a7415abf53c02294a46",
+      "bytes": 66408
+    },
+    {
+      "path": "spec/SPEC.md",
+      "git_blob": "db165ffcaf96cb1faf278bd9d86d3ab97c67ed5b",
+      "sha256": "12b1439258d47119e5bb86c467baad4f806cca7afab14fb214c1cfe773c85000",
+      "bytes": 38405
+    },
+    {
+      "path": "docs/GUIDE.md",
+      "git_blob": "020ca94dbc5c75aeb826ca28f943fa4159b7ee6b",
+      "sha256": "fda159180118611e3b535c6af55fd4bdc9b39bf1076daec445a8b8d69da831b2",
+      "bytes": 22293
+    },
+    {
+      "path": ".gitmodules",
+      "git_blob": "592e086a8d243a66ca949bd4a025fadfe2db9495",
+      "sha256": "d22f7d5a3b63d77330d8880c6a2dccb827a54bbca23b9b4b323b52b8f017c0ca",
+      "bytes": 93
+    },
+    {
+      "path": "go.mod",
+      "git_blob": "1c9547a15bea855ed98cffb88a5075d6cf3aaa93",
+      "sha256": "531b5b27b3edc987345daeac4cd8c64c4bd60d6a9f4eaf1595215901292f468f",
+      "bytes": 2026
+    }
+  ],
+  "goZenonGitlink": {
+    "path": "go-zenon",
+    "revision": "590f43ca7a24dccd8e883bc8903a0cb02e54528a",
+    "sourceUrl": "https://github.com/zenon-network/go-zenon",
+    "fetchedOrExecutedForThisDocumentation": false
+  },
+  "projectDirectionSources": [
+    {
+      "repository": "Zenoglyphs-VM/zvm-core",
+      "revision": "29e6d9b30be94de3772c850c7a1e9811585a8833",
+      "path": "README.md",
+      "sha256": "e76f076a61e93234bb20e8804f664432c14eec8c73dc6bcffc55c4ec1efbcf33",
+      "bytes": 2063
+    },
+    {
+      "repository": "Zenoglyphs-VM/zvm-node",
+      "revision": "ae90b945b0ea95887c31cfb2f19e0b88504186d8",
+      "path": "README.md",
+      "sha256": "fa2adf967ca46865d84dc223458236ddc9f9200c6f0dbb0878b1a32d2c85e260",
+      "bytes": 1556
+    },
+    {
+      "repository": "Zenoglyphs-VM/zvm-docs",
+      "revision": "35c5be8a59059a9e1f3aab40c980ef6cd18cf0be",
+      "path": "ARCHITECTURE.md",
+      "sha256": "77119b7cf308b890178e2e206846a00d48780f755851d7ac8be2b84791dc2d28",
+      "bytes": 19112
+    }
+  ],
+  "qualification": {
+    "sourceInspectionOnly": true,
+    "migrationExecuted": false,
+    "ledgerConversionEstablished": false,
+    "supportCommitmentEstablished": false,
+    "releaseOrProductionQualified": false
+  },
+  "limits": [
+    "Selected source identity and digests are not independent source authority, current execution, release provenance or migration compatibility.",
+    "The metadata observation is dated; it is not a support commitment or an exhaustive search of operator data or all repository history.",
+    "Original source, license and historical evidence are preserved; README and security additions state their separate legacy scope."
+  ]
+}
